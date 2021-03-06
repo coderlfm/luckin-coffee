@@ -18,17 +18,6 @@ class App extends StatelessWidget {
       theme: AppTheme.appThtme,
       routes: AppRoutes.routes,
       initialRoute: AppRoutes.initialRoute,
-      // home: Scaffold(
-      //   body: Center(
-      //     child: Builder(
-      //       builder: (context) {
-      //         return Container(
-      //           color: Theme.of(context).primaryColor,
-      //         );
-      //       },
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

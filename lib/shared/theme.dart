@@ -12,6 +12,7 @@ class AppTheme {
     primarySwatch: Colors.green,
     primaryColor: Color(0xff88afd5),
     accentColor: Color(0xff90c0ef),
+    canvasColor: Color(0xffF5F5F5),
     textTheme: TextTheme(
       bodyText1: TextStyle(fontSize: bodyFontSize),
       headline1: TextStyle(fontSize: xsmallFontSize),

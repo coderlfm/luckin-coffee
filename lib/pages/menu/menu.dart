@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luckincoffee/pages/menu/menu-content.dart';
 
 class MenuPage extends StatelessWidget {
   static const String routerName = '/menu';
@@ -7,17 +8,10 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('菜单'),
+        title: Text('选择咖啡和美食'),
+        backgroundColor: Colors.white,
       ),
-      body: Center(
-        child: Text('菜单'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('菜单');
-        },
-        child: Icon(Icons.add),
-      ),
+      body: MenuContent(),
     );
   }
 }
