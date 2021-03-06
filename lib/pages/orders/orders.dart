@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  static const String routerName = '/profile';
+class OrdersPage extends StatelessWidget {
+  static const String routerName = '/orders';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('我的'),
+        title: Text('订单'),
       ),
       body: Center(
-        child: Text('我的'),
+        child: Text('订单'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
