@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:luckincoffee/extensions/int-extensions.dart';
+import 'package:luckincoffee/services/menu.dart';
 
 final List<Image> banners = [
   Image.asset(
@@ -14,7 +15,12 @@ final List<Image> banners = [
   ),
 ];
 
-class MenuContent extends StatelessWidget {
+class MenuContent extends StatefulWidget {
+  @override
+  _MenuContentState createState() => _MenuContentState();
+}
+
+class _MenuContentState extends State<MenuContent> {
   Widget buildMain() {
     return Expanded(
       child: Row(
@@ -61,6 +67,12 @@ class MenuContent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    MenuRequest.getProductList().then((value) => print('value：$value'));
   }
 
   @override
