@@ -7,10 +7,10 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('选择咖啡和美食'),
-        backgroundColor: Colors.white,
-      ),
+      // appBar: AppBar(
+      //   title: Text('选择咖啡和美食'),
+      //   backgroundColor: Colors.white,
+      // ),
       body: MenuContent(),
     );
   }

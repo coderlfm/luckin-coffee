@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const double bodyFontSize = 14;
-  static const double xsmallFontSize = 12;
+  static const double bodyFontSize = 12;
+  static const double xsmallFontSize = 10;
   static const double smallFontSize = 16;
   static const double normalFontSize = 18;
   static const double largeFontSize = 20;
@@ -12,7 +12,7 @@ class AppTheme {
     primarySwatch: Colors.green,
     primaryColor: Color(0xff88afd5),
     accentColor: Color(0xff90c0ef),
-    canvasColor: Color(0xffF5F5F5),
+    canvasColor: Color(0xffF2F2F2),
     textTheme: TextTheme(
       bodyText1: TextStyle(fontSize: bodyFontSize),
       headline1: TextStyle(fontSize: xsmallFontSize),

@@ -239,7 +239,7 @@ class ProductList {
   int multiSku;
   int productType;
   int inventoryType;
-  CoffeeLabel? promotionMsg;
+  String? promotionMsg;
   String productId;
   double initialPrice;
   String whiteBackgroundUrl;
@@ -274,7 +274,7 @@ class ProductList {
         multiSku: json["multiSku"] == null ? null : json["multiSku"],
         productType: json["productType"] == null ? null : json["productType"],
         inventoryType: json["inventoryType"] == null ? null : json["inventoryType"],
-        promotionMsg: json["promotionMsg"] == null ? null : coffeeLabelValues.map[json["promotionMsg"]],
+        promotionMsg: json["promotionMsg"] == null ? null : json["promotionMsg"],
         productId: json["productId"] == null ? null : json["productId"],
         initialPrice: json["initialPrice"] == null ? null : json["initialPrice"].toDouble(),
         whiteBackgroundUrl: json["whiteBackgroundUrl"] == null ? null : json["whiteBackgroundUrl"],

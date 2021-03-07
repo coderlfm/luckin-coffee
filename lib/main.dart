@@ -4,11 +4,18 @@ import 'package:luckincoffee/pages/main/main.dart';
 import 'package:luckincoffee/routes/router.dart';
 import 'package:luckincoffee/shared/size-hot.dart';
 import 'package:luckincoffee/shared/theme.dart';
+import 'package:luckincoffee/view-model/product-view-model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SizeHot.initialize();
 
-  runApp(App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (ctx) => ProductViewModel()),
+    ],
+    child: App(),
+  ));
 }
 
 class App extends StatelessWidget {
