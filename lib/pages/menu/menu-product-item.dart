@@ -8,10 +8,13 @@ class MenuProductItem extends StatelessWidget {
   /// 商品对象
   late final ProductList prod;
 
+  /// 是否已售罄
+  late final bool isSellOut;
+
   /// 次级文字颜色
   final Color secondColor = Color(0xffaaaaaa);
 
-  MenuProductItem(this.prod);
+  MenuProductItem({required this.prod, required this.isSellOut});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class MenuProductItem extends StatelessWidget {
   Stack buildImg(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
+      alignment: Alignment.center,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(4.px),
@@ -60,6 +64,16 @@ class MenuProductItem extends StatelessWidget {
                 '${prod.promotionMsg}',
                 style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),
               ),
+            ),
+          ),
+        if (isSellOut)
+          Positioned(
+            // width: double.infinity,
+            // height: double.infinity,
+            child: Image.asset(
+              'lib/assets/images/menu/sell_out_icon.png',
+              width: 40.px,
+              height: 40.px,
             ),
           )
       ],

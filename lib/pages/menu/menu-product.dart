@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'menu-product-item.dart';
 
 class MenuProduct extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Selector<ProductViewModel, ProductViewModel>(
@@ -70,16 +69,33 @@ class MenuProuctGroup extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(tProd.twoKindName, style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
-        ListView.separated(
-          padding: EdgeInsets.symmetric(vertical: 15.px),
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          itemCount: tProd.productList.length,
-          itemBuilder: (ctx, index) => MenuProductItem(tProd.productList[index]),
-          separatorBuilder: (ctx, index) => Divider(),
-        )
+        Text(
+          tProd.twoKindId == '-1' ? '已售罄' : tProd.twoKindName,
+          style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        ),
+        buildProductGroup(tProd),
       ],
+    );
+  }
+
+  /// 构建商品组，正常商品和售罄商品
+  Widget buildProductGroup(TwoProductList tProd) {
+    if (tProd.twoKindId == '-1') {
+      /// TODO: 此处 需要显示一共有多少个售罄商品
+      return Opacity(
+          opacity: .3,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.px),
+            child: MenuProductItem(prod: tProd.productList[0], isSellOut: tProd.twoKindId == '-1'),
+          ));
+    }
+    return ListView.separated(
+      padding: EdgeInsets.symmetric(vertical: 15.px),
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemCount: tProd.productList.length,
+      itemBuilder: (ctx, index) => MenuProductItem(prod: tProd.productList[index], isSellOut: tProd.twoKindId == '-1'),
+      separatorBuilder: (ctx, index) => Divider(),
     );
   }
 
