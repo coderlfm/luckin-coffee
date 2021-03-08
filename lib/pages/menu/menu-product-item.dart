@@ -106,13 +106,14 @@ class MenuProductItem extends StatelessWidget {
                 ),
                 child: Text(
                   '${prod.label}',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(color: Color(0xffF95731)),
+                  style: Theme.of(context).textTheme.headline1?.copyWith(color: Color(0xffF95731), fontWeight: FontWeight.bold),
                 ),
               ),
           ],
         ),
         Container(
-          height: 16.px,
+          height: 20.px,
+          width: 20.px,
           child: FloatingActionButton(
             elevation: 0,
             highlightElevation: 0,
@@ -120,7 +121,7 @@ class MenuProductItem extends StatelessWidget {
             // padding: EdgeInsets.zero,
             child: Icon(
               Icons.add,
-              size: 16.px,
+              size: 20.px,
               color: Colors.white,
             ),
             onPressed: () {},

@@ -33,12 +33,20 @@ class MenuProduct extends StatelessWidget {
   }
 }
 
-class MenuProuctGroup extends StatelessWidget {
+class MenuProuctGroup extends StatefulWidget {
   late final MenuModel prod;
 
+  MenuProuctGroup(this.prod);
+
+  @override
+  _MenuProuctGroupState createState() => _MenuProuctGroupState();
+}
+
+class _MenuProuctGroupState extends State<MenuProuctGroup> {
   final Color secondColor = Color(0xffaaaaaa);
 
-  MenuProuctGroup(this.prod);
+  /// 是否渲染已售罄商品
+  bool _isShowSellOut = false;
 
   /// 构建商品分类头部
   Widget buildHeader(BuildContext context) {
@@ -47,17 +55,17 @@ class MenuProuctGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          prod.kindName,
+          widget.prod.kindName,
           style: Theme.of(context).textTheme.bodyText1?.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
-          prod.kindDesc,
+          widget.prod.kindDesc,
           style: Theme.of(context).textTheme.headline1?.copyWith(fontWeight: FontWeight.bold, color: secondColor),
         ),
-        if (prod.advertisingInfo != null)
+        if (widget.prod.advertisingInfo != null)
           Padding(
             padding: EdgeInsets.only(top: 15.px, bottom: 5.px),
-            child: Image.network(prod.advertisingInfo!.sourceUrl),
+            child: Image.network(widget.prod.advertisingInfo!.sourceUrl),
           ),
       ],
     );
@@ -69,25 +77,71 @@ class MenuProuctGroup extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          tProd.twoKindId == '-1' ? '已售罄' : tProd.twoKindName,
-          style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              tProd.twoKindId == '-1' ? '已售罄' : tProd.twoKindName,
+              style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+            ),
+            if (tProd.twoKindId == '-1' && tProd.productList.length > 2) buildSellOutTips(tProd, context)
+          ],
         ),
         buildProductGroup(tProd),
       ],
     );
   }
 
+  /// 渲染售罄总商品数量
+  Padding buildSellOutTips(TwoProductList tProd, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: 5.px),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _isShowSellOut = !_isShowSellOut;
+          });
+        },
+        child: Row(
+          children: [
+            Text('含${tProd.productList.length}个商品', style: Theme.of(context).textTheme.headline1?.copyWith(fontWeight: FontWeight.bold, color: secondColor)),
+            SizedBox(width: 10.px),
+            Container(
+              height: 16.px,
+              child: Image.asset(
+                'lib/assets/images/menu/arrow_down_blue.png',
+                width: 10.px,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// 构建商品组，正常商品和售罄商品
   Widget buildProductGroup(TwoProductList tProd) {
-    if (tProd.twoKindId == '-1') {
+    if (tProd.twoKindId == '-1' && !_isShowSellOut) {
       /// TODO: 此处 需要显示一共有多少个售罄商品
       return Opacity(
-          opacity: .3,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.px),
-            child: MenuProductItem(prod: tProd.productList[0], isSellOut: tProd.twoKindId == '-1'),
-          ));
+        opacity: .3,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.px),
+          child: MenuProductItem(prod: tProd.productList[0], isSellOut: true),
+        ),
+      );
+    } else if (tProd.twoKindId == '-1' && _isShowSellOut) {
+      return Opacity(
+        opacity: .3,
+        child: ListView.separated(
+          padding: EdgeInsets.symmetric(vertical: 15.px),
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          itemCount: tProd.productList.length,
+          itemBuilder: (ctx, index) => MenuProductItem(prod: tProd.productList[index], isSellOut: true),
+          separatorBuilder: (ctx, index) => Divider(),
+        ),
+      );
     }
 
     return ListView.separated(
@@ -111,8 +165,8 @@ class MenuProuctGroup extends StatelessWidget {
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: ScrollPhysics(),
-          itemCount: prod.twoProductList.length,
-          itemBuilder: (ctx, index) => buildProductList(context, prod.twoProductList[index]),
+          itemCount: widget.prod.twoProductList.length,
+          itemBuilder: (ctx, index) => buildProductList(context, widget.prod.twoProductList[index]),
         ),
       ],
     );
