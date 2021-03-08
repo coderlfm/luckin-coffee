@@ -1,30 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:luckincoffee/model/menu-scroll.dart';
+import 'package:provider/provider.dart';
 
 import 'package:luckincoffee/extensions/int-extensions.dart';
 import 'package:luckincoffee/model/menu-model.dart';
 import 'package:luckincoffee/utils/hex-color.dart';
 import 'package:luckincoffee/view-model/product-view-model.dart';
-import 'package:provider/provider.dart';
-
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'menu-product-item.dart';
+import 'package:luckincoffee/utils/event-bus.dart';
 
-class MenuProduct extends StatelessWidget {
+class MenuProduct extends StatefulWidget {
+  @override
+  _MenuProductState createState() => _MenuProductState();
+}
+
+class _MenuProductState extends State<MenuProduct> {
+  // final _listViewController = ScrollController();
+
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+  void jump() {
+    // _listViewController
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    eventBus.on<MenuScroll>().listen((event) {
+      itemScrollController.scrollTo(index: event.index, duration: Duration(milliseconds: 400));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Selector<ProductViewModel, ProductViewModel>(
       builder: (ctx, prodVM, child) {
-        // bool isEmpty = prodVM.products.length == 0;
-
-        return ListView.separated(
-          padding: EdgeInsets.zero,
+        return ScrollablePositionedList.builder(
           itemCount: prodVM.products.length,
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          itemBuilder: (ctx, index) => Padding(
+          itemBuilder: (context, index) => Padding(
             padding: EdgeInsets.all(8.px),
             child: MenuProuctGroup(prodVM.products[index]),
           ),
-          separatorBuilder: (ctx, index) => Divider(),
+          itemScrollController: itemScrollController,
+          itemPositionsListener: itemPositionsListener,
         );
       },
       selector: (ctx, prodVM) => prodVM,

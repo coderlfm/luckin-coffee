@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:luckincoffee/model/menu-scroll.dart';
+
+import 'package:provider/provider.dart';
 
 import 'package:luckincoffee/extensions/int-extensions.dart';
 import 'package:luckincoffee/model/menu-model.dart';
 import 'package:luckincoffee/pages/menu/menu-product.dart';
 import 'package:luckincoffee/utils/hex-color.dart';
 import 'package:luckincoffee/view-model/product-view-model.dart';
-import 'package:provider/provider.dart';
+import 'package:luckincoffee/utils/event-bus.dart';
 
 class MenuContentProducts extends StatefulWidget {
   @override
@@ -15,7 +18,7 @@ class MenuContentProducts extends StatefulWidget {
 class _MenuContentProductsState extends State<MenuContentProducts> {
   String _currentSelect = '';
 
-  /// 渲染头部 tips
+  /// 构建头部 tips
   Widget buildProductCategoryTips({
     required String name,
     required String nameColor,
@@ -40,6 +43,7 @@ class _MenuContentProductsState extends State<MenuContentProducts> {
     );
   }
 
+  /// 构建活跃 item 样式
   Widget buildbuildProductCategoryRound() {
     return Positioned(
       left: -20.px,
@@ -51,8 +55,8 @@ class _MenuContentProductsState extends State<MenuContentProducts> {
     );
   }
 
-  /// 渲染左侧商品菜单
-  Widget buildProductCategory(MenuModel prod) {
+  /// 构建左侧商品菜单
+  Widget buildProductCategory(MenuModel prod, int index) {
     final List<Widget> prodCategory = [
       Padding(
         padding: EdgeInsets.fromLTRB(13.px, 15.px, 0, 15.px),
@@ -79,6 +83,7 @@ class _MenuContentProductsState extends State<MenuContentProducts> {
       onTap: () {
         setState(() {
           _currentSelect = prod.kindId;
+          eventBus.fire(MenuScroll(index));
         });
       },
       child: Container(
@@ -122,7 +127,7 @@ class _MenuContentProductsState extends State<MenuContentProducts> {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemCount: prods.length,
-                  itemBuilder: (ctx, index) => buildProductCategory(prods[index]),
+                  itemBuilder: (ctx, index) => buildProductCategory(prods[index], index),
                 ),
               ),
               SizedBox(width: 5.px),
