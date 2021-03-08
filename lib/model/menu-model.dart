@@ -191,15 +191,15 @@ class TwoProductList {
 
 class ProductList {
   ProductList({
-    required this.firstOrderFlag,
+    this.firstOrderFlag,
     required this.discountPrice,
-    required this.mode,
-    required this.skuName,
-    required this.supportSend,
+    this.mode,
+    this.skuName,
+    this.supportSend,
     required this.sortId,
-    required this.coffeeLabel,
+    this.coffeeLabel,
     required this.commodityCode,
-    required this.enName,
+    this.enName,
     required this.maxAmount,
     required this.multiSku,
     required this.productType,
@@ -209,8 +209,8 @@ class ProductList {
     required this.initialPrice,
     required this.whiteBackgroundUrl,
     required this.defaultPicUrl,
-    required this.tagList,
-    required this.eatway,
+    this.tagList,
+    this.eatway,
     required this.unit,
     required this.isHaveStorageStock,
     required this.name,
@@ -219,22 +219,22 @@ class ProductList {
     required this.promotionOrder,
     required this.skuCode,
     required this.promotion,
-    required this.desc,
+    this.desc,
     required this.label,
-    required this.detailDesc,
+    this.detailDesc,
     required this.priceDesc,
     required this.stockSurplusAmount,
   });
 
-  int firstOrderFlag;
+  int? firstOrderFlag;
   double discountPrice;
-  int mode;
-  String skuName;
-  int supportSend;
+  int? mode;
+  String? skuName;
+  int? supportSend;
   int sortId;
   CoffeeLabel? coffeeLabel;
   String commodityCode;
-  String enName;
+  String? enName;
   int maxAmount;
   int multiSku;
   int productType;
@@ -254,9 +254,9 @@ class ProductList {
   int promotionOrder;
   String skuCode;
   int promotion;
-  String desc;
-  String label;
-  String detailDesc;
+  String? desc;
+  String? label;
+  String? detailDesc;
   String priceDesc;
   int stockSurplusAmount;
 

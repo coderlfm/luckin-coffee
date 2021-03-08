@@ -89,13 +89,26 @@ class MenuProductItem extends StatelessWidget {
           children: [
             Text(
               '￥${prod.discountPrice.toInt()}',
-              style: Theme.of(context).textTheme.headline2?.copyWith(color: Color(0xffD4660C), letterSpacing: -2),
+              style: Theme.of(context).textTheme.headline2?.copyWith(color: Color(0xffF95731), letterSpacing: -2),
             ),
-            SizedBox(width: 3.px),
+            SizedBox(width: 5.px),
             Text(
               '￥${prod.initialPrice}',
               style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold, decoration: TextDecoration.lineThrough, decorationColor: secondColor),
             ),
+            SizedBox(width: 5.px),
+            if (prod.label != null)
+              Container(
+                padding: EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.px, color: Color(0xffF95731)),
+                  borderRadius: BorderRadius.circular(1.px),
+                ),
+                child: Text(
+                  '${prod.label}',
+                  style: Theme.of(context).textTheme.headline1?.copyWith(color: Color(0xffF95731)),
+                ),
+              ),
           ],
         ),
         Container(
@@ -134,7 +147,7 @@ class MenuProductItem extends StatelessWidget {
           ],
         ),
         Text(
-          prod.enName,
+          '${prod.enName}',
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 color: secondColor,
                 fontWeight: FontWeight.bold,
@@ -144,7 +157,7 @@ class MenuProductItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          prod.skuName,
+          '${prod.skuName ?? prod.desc}',
           style: Theme.of(context).textTheme.headline1?.copyWith(color: secondColor, fontWeight: FontWeight.bold),
         ),
       ],

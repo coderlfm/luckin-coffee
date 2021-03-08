@@ -16,13 +16,17 @@ class _MenuContentProductsState extends State<MenuContentProducts> {
   String _currentSelect = '';
 
   /// 渲染头部 tips
-  Widget buildProductCategoryTips({required String name, required String nameColor, required String bgColor}) {
+  Widget buildProductCategoryTips({
+    required String name,
+    required String nameColor,
+    required String bgColor,
+  }) {
     return Positioned(
       right: 0,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 0.px, horizontal: 7.px),
         decoration: BoxDecoration(
-          color: HexColor(bgColor),
+          color: HexColor('#F95731'),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(8.px),
             bottomRight: Radius.circular(8.px),
