@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:luckincoffee/model/tide-banner-model.dart';
+import 'package:luckincoffee/model/tide-model.dart';
 import 'package:luckincoffee/services/request.dart';
 
 class TideRequest {
@@ -40,8 +41,9 @@ class TideRequest {
   }
 
   /// 获取潮品数据
-  static void getTideData() async {
+  static Future<List<TideModel>> getTideData() async {
     final resStr = await HttpTickRequest.lcRequest('eorder/page/queryShowInformation?brandType=LK001&origin=4&preView=0&homePage=1&_=1615276251389');
-    print('resStr: ${resStr}');
+
+    return tideModelFromMap(resStr['content']['pageComponents']);
   }
 }

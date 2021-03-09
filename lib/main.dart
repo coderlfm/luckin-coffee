@@ -14,7 +14,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (ctx) => ProductViewModel()),
-      ChangeNotifierProvider(create: (ctx) => TideViewModel('hello')),
+      ChangeNotifierProvider(create: (ctx) => TideViewModel()),
     ],
     child: App(),
   ));

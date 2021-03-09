@@ -34,8 +34,8 @@ final List<BottomNavigationBarItem> tabbar = [
 
 final List<Widget> pages = [
   TidePage(),
-  HomePage(),
-  MenuPage(),
-  CartPage(),
-  ProfilePage(),
+  // HomePage(),
+  // MenuPage(),
+  // CartPage(),
+  // ProfilePage(),
 ];
