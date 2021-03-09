@@ -74,11 +74,95 @@ class TideContent extends StatelessWidget {
         widget = buildActivityImg(tidata);
         break;
 
+      case 6:
+        widget = buildActivitySection(context, tidata);
+        break;
+
       default:
         widget = Text('商品组件');
     }
 
     return widget;
+  }
+
+  /// 构建活动板块
+  Widget buildActivitySection(BuildContext context, TideModel tidata) {
+    final prods = tidata.commodityList!;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.px),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.px),
+            child: Image.network(tidata.backGroundUrl),
+          ),
+          Positioned(
+            // bottom: 0,
+            child: GridView.builder(
+              padding: EdgeInsets.all(10.px),
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: prods.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10.px,
+                mainAxisExtent: 120.px,
+              ),
+              itemBuilder: (ctx, index) {
+                return buildActivitySectionItem(prods, index, context);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 构建 活动板块商品 item
+  Container buildActivitySectionItem(List<CommodityList> prods, int index, BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.px),
+        color: Colors.white,
+      ),
+      height: 150.px,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8.px), topRight: Radius.circular(8.px)),
+            child: Image.network(prods[index].defaultPicUrl),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.px),
+            child: Column(
+              children: [
+                Text(
+                  prods[index].name,
+                  softWrap: false,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '￥${prods[index].disCountPrice.toInt()}',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                    ),
+                    SizedBox(height: 5.px),
+                    Text(
+                      '￥${prods[index].price.toInt()}',
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.bold, decoration: TextDecoration.lineThrough, color: Color(0xff999999)),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   /// 构建 活动图片
