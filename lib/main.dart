@@ -5,6 +5,7 @@ import 'package:luckincoffee/routes/router.dart';
 import 'package:luckincoffee/shared/size-hot.dart';
 import 'package:luckincoffee/shared/theme.dart';
 import 'package:luckincoffee/view-model/product-view-model.dart';
+import 'package:luckincoffee/view-model/tide-view-model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -13,6 +14,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (ctx) => ProductViewModel()),
+      ChangeNotifierProvider(create: (ctx) => TideViewModel('hello')),
     ],
     child: App(),
   ));

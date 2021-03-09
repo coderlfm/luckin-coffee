@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:luckincoffee/pages/home/home.dart';
 import 'package:luckincoffee/pages/menu/menu.dart';
-import 'package:luckincoffee/pages/orders/orders.dart';
+import 'package:luckincoffee/pages/tide/tide.dart';
 import 'package:luckincoffee/pages/cart/cart.dart';
 import 'package:luckincoffee/pages/profile/profile.dart';
 
@@ -20,7 +20,7 @@ final List<BottomNavigationBarItem> tabbar = [
   ),
   BottomNavigationBarItem(
     icon: Icon(IconFonts.iconorder),
-    label: '订单',
+    label: '潮品',
   ),
   BottomNavigationBarItem(
     icon: Icon(IconFonts.icongouwuche),
@@ -33,9 +33,9 @@ final List<BottomNavigationBarItem> tabbar = [
 ];
 
 final List<Widget> pages = [
+  TidePage(),
   HomePage(),
   MenuPage(),
-  OrdersPage(),
   CartPage(),
   ProfilePage(),
 ];
