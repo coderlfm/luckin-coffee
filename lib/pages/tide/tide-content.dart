@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luckincoffee/model/tide-model.dart';
 import 'package:luckincoffee/model/tide-banner-model.dart';
+import 'package:luckincoffee/pages/tide/tide-products.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -24,6 +25,7 @@ class TideContent extends StatelessWidget {
 
           if (tidata.length != 0 && tiBanners.length != 0) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 buildSwiper(tidata, tiBanners),
                 Padding(
@@ -76,6 +78,10 @@ class TideContent extends StatelessWidget {
 
       case 6:
         widget = buildActivitySection(context, tidata);
+        break;
+
+      case 17:
+        widget = TideProducts(tidata.commodityList!);
         break;
 
       default:
