@@ -30,6 +30,19 @@ class TideContent extends StatelessWidget {
             return Column(
               children: [
                 buildSwiper(tidata, tiBanners),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.px),
+                  child: ListView.builder(
+                      padding: EdgeInsets.zero,
+
+                      /// 去除背景图
+                      itemCount: tidata.length - 1,
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (ctx, index) {
+                        return checkBuildType(tidata[index + 1]);
+                      }),
+                )
               ],
             );
           }
@@ -38,6 +51,45 @@ class TideContent extends StatelessWidget {
         },
       ),
     );
+  }
+
+  /// 校验 构建的 widget 类型
+  Widget checkBuildType(TideModel tidata) {
+    late Widget widget;
+
+    switch (tidata.componentType) {
+      case 2:
+        widget = buildImg(tidata.backGroundUrl);
+        break;
+
+      case 5:
+        widget = buildImg(tidata.backGroundUrl);
+        break;
+
+      case 3:
+        widget = buildChannel(tidata);
+        break;
+
+      default:
+        widget = Text('商品组件');
+    }
+
+    return widget;
+  }
+
+  /// 构建轮播底部图片
+  Widget buildImg(String url) => Padding(padding: EdgeInsets.symmetric(vertical: 5.px), child: Image.network(url));
+
+  /// 构建频道
+  Widget buildChannel(TideModel tidata) {
+    return GridView.builder(
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        itemCount: tidata.subComponents!.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+        itemBuilder: (ctx, index) {
+          return Image.network(tidata.subComponents![index].backGroundUrl);
+        });
   }
 
   /// 构建 swiper
