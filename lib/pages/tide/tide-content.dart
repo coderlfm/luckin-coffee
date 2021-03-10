@@ -154,7 +154,7 @@ class TideContent extends StatelessWidget {
                   children: [
                     Text(
                       '￥${prods[index].disCountPrice.toInt()}',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xffD95C25)),
                     ),
                     SizedBox(height: 5.px),
                     Text(

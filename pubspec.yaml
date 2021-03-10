@@ -53,6 +53,7 @@ flutter:
   assets:
     - lib/assets/
     - lib/assets/images/home/
+    - lib/assets/images/tide/
     - lib/assets/images/menu/
     - lib/assets/images/profile/
 

@@ -146,7 +146,7 @@ class CommodityList {
 
   final String alreadySellNumber;
   final String attribute;
-  final List<BaseTagList> baseTagList;
+  final List<String> baseTagList;
   final String clickUrl;
   final String codeId;
   final String commentCondition;
@@ -195,7 +195,7 @@ class CommodityList {
   factory CommodityList.fromMap(Map<String, dynamic> json) => CommodityList(
         alreadySellNumber: json["alreadySellNumber"],
         attribute: json["attribute"],
-        baseTagList: List<BaseTagList>.from(json["baseTagList"].map((x) => baseTagListValues.map[x])),
+        baseTagList: List<String>.from(json["baseTagList"].map((x) => x)),
         clickUrl: json["clickUrl"],
         codeId: json["codeId"],
         commentCondition: json["commentCondition"],
