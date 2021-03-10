@@ -4,6 +4,8 @@ import 'package:luckincoffee/model/tide-model.dart';
 import 'package:luckincoffee/services/tide.dart';
 
 class TideViewModel extends ChangeNotifier {
+  static int homePage = 1;
+
   ///潮品轮播图数据
   List<TideBannerModel> _tideBannerData = [];
 
@@ -24,16 +26,28 @@ class TideViewModel extends ChangeNotifier {
   }
 
   TideViewModel() {
+    tideInitData();
+  }
+
+  /// 初始化数据
+  void tideInitData() {
     /// 获取轮播图数据
     TideRequest.getTideBannerData().then((res) {
       print('轮播图数据: $res');
       tideBannerData = res;
     });
 
+    getTideData();
+  }
+
+  /// 获取潮品数据
+  Future getTideData() async {
     /// 获取潮品数据
-    TideRequest.getTideData().then((res) {
-      print('潮品数据: $res');
-      tideData = res;
-    });
+    final res = await TideRequest.getTideData(page: homePage);
+    homePage++;
+    print('潮品数据: $res');
+    tideData = res;
+
+    return Future.value();
   }
 }

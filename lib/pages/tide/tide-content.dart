@@ -218,13 +218,14 @@ class TideContent extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5.px),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(100.px),
-                          // border: Border.all(color: Colors.red, width: 1.px),
-                        ),
-                        child: Text('距结束', style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white))),
+                      padding: EdgeInsets.symmetric(horizontal: 5.px),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(100.px),
+                        // border: Border.all(color: Colors.red, width: 1.px),
+                      ),
+                      child: Text('距结束', style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white)),
+                    ),
                     Text('${DateTime.fromMicrosecondsSinceEpoch((flashSale.endTimeCountdown * 1000 * 1000) - nowTime)}', style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.black)),
                   ],
                 ),

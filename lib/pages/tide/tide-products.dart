@@ -1,33 +1,79 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:luckincoffee/model/tide-model.dart';
 import 'package:luckincoffee/extensions/int-extensions.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class TideProducts extends StatelessWidget {
+class TideProducts extends StatefulWidget {
   late final List<CommodityList> products;
 
   TideProducts(this.products);
 
   @override
+  _TideProductsState createState() => _TideProductsState();
+}
+
+class _TideProductsState extends State<TideProducts> {
+  // final ScrollController _scrollController = new ScrollController(initialScrollOffset: 0);
+
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  /// 下拉刷新
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  /// loading
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    print('loading...');
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    // items.add((items.length+1).toString());
+    if (mounted)
+      // setState(() {
+
+      // });
+      _refreshController.loadComplete();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  /// 加载更多
+  void _onLoadMore() {
+    print("加载更多！");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return buildProductList();
+  }
+
+  /// 构建商品列表
+  StaggeredGridView buildProductList() {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 4, //横轴单元格数量
-
-      itemCount: products.length, //元素数量
+      itemCount: widget.products.length, //元素数量
       physics: ScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(vertical: 8.px),
       mainAxisSpacing: 8.px,
       crossAxisSpacing: 8.px,
-      itemBuilder: (context, index) {
-        final prod = products[index];
-
-        return buildProductItem(prod, context);
-      },
+      itemBuilder: (context, index) => buildProductItem(widget.products[index], context),
       staggeredTileBuilder: (index) => StaggeredTile.fit(2),
     );
   }
 
+  /// 构建商品 item
   Container buildProductItem(CommodityList prod, BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8.px)),

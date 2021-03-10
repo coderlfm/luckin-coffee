@@ -41,8 +41,14 @@ class TideRequest {
   }
 
   /// 获取潮品数据
-  static Future<List<TideModel>> getTideData() async {
-    final resStr = await HttpTickRequest.lcRequest('eorder/page/queryShowInformation?brandType=LK001&origin=4&preView=0&homePage=1&_=1615276251389');
+  static Future<List<TideModel>> getTideData({int page = 1}) async {
+    dynamic resStr;
+    if (page == 1) {
+      resStr = await HttpTickRequest.lcRequest('eorder/page/queryShowInformation?brandType=LK001&origin=4&preView=0&homePage=1&_=1615276251389');
+    } else {
+      /// TODO: 此处还需要修改 videmodel 中的数据
+      resStr = await HttpTickRequest.lcRequest('eorder/page/pagingProductList?planNo=SK003&pageNo=$page&brandType=LK001&origin=4&_=1615373903950');
+    }
 
     return tideModelFromMap(resStr['content']['pageComponents']);
   }
