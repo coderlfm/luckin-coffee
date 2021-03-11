@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:luckincoffee/model/tide-model.dart';
 import 'package:luckincoffee/extensions/int-extensions.dart';
+import 'package:luckincoffee/view-model/tide-view-model.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TideProducts extends StatefulWidget {
@@ -59,18 +61,44 @@ class _TideProductsState extends State<TideProducts> {
   }
 
   /// 构建商品列表
-  StaggeredGridView buildProductList() {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: 4, //横轴单元格数量
-      itemCount: widget.products.length, //元素数量
-      physics: ScrollPhysics(),
-      shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: 8.px),
-      mainAxisSpacing: 8.px,
-      crossAxisSpacing: 8.px,
-      itemBuilder: (context, index) => buildProductItem(widget.products[index], context),
-      staggeredTileBuilder: (index) => StaggeredTile.fit(2),
+  Widget buildProductList() {
+    return Selector<TideViewModel, TideViewModel>(
+      selector: (ctx, tiVM) => tiVM,
+      shouldRebuild: (prev, next) {
+        return next.tideBannerData.length != 0 || next.tideData.length != 0;
+      },
+      builder: (ctx, tiVM, child) {
+        final tiProddata = tiVM.tideProductData;
+
+        final List<CommodityList> products = [...widget.products, ...tiProddata];
+
+        return StaggeredGridView.countBuilder(
+          crossAxisCount: 4, //横轴单元格数量
+          itemCount: products.length, //元素数量
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(vertical: 8.px),
+          mainAxisSpacing: 8.px,
+          crossAxisSpacing: 8.px,
+          itemBuilder: (context, index) => buildProductItem(products[index], context),
+          staggeredTileBuilder: (index) => StaggeredTile.fit(2),
+        );
+      },
     );
+
+    // return widget(
+    //   child: StaggeredGridView.countBuilder(
+    //     crossAxisCount: 4, //横轴单元格数量
+    //     itemCount: widget.products.length, //元素数量
+    //     physics: ScrollPhysics(),
+    //     shrinkWrap: true,
+    //     padding: EdgeInsets.symmetric(vertical: 8.px),
+    //     mainAxisSpacing: 8.px,
+    //     crossAxisSpacing: 8.px,
+    //     itemBuilder: (context, index) => buildProductItem(widget.products[index], context),
+    //     staggeredTileBuilder: (index) => StaggeredTile.fit(2),
+    //   ),
+    // );
   }
 
   /// 构建商品 item

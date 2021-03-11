@@ -12,8 +12,12 @@ class TideViewModel extends ChangeNotifier {
   /// 潮品数据
   List<TideModel> _tideData = [];
 
+  /// 潮品商品更多数据
+  List<CommodityList> _tideProductData = [];
+
   List<TideBannerModel> get tideBannerData => _tideBannerData;
   List<TideModel> get tideData => _tideData;
+  List<CommodityList> get tideProductData => _tideProductData;
 
   set tideBannerData(List<TideBannerModel> tidbans) {
     _tideBannerData = tidbans;
@@ -22,6 +26,11 @@ class TideViewModel extends ChangeNotifier {
 
   set tideData(List<TideModel> tideData) {
     _tideData = tideData;
+    notifyListeners();
+  }
+
+  set tideProductData(List<CommodityList> tideProductData) {
+    _tideProductData = tideProductData;
     notifyListeners();
   }
 
@@ -43,11 +52,16 @@ class TideViewModel extends ChangeNotifier {
   /// 获取潮品数据
   Future getTideData() async {
     /// 获取潮品数据
-    final res = await TideRequest.getTideData(page: homePage);
-    homePage++;
-    print('潮品数据: $res');
-    tideData = res;
+    if (homePage == 1) {
+      final res = await TideRequest.getTideData(page: homePage);
+      print('潮品数据: $res');
+      tideData = res;
+    } else {
+      final res = await TideRequest.getTideProductData(page: homePage);
+      tideProductData = res;
+    }
 
+    homePage++;
     return Future.value();
   }
 }
