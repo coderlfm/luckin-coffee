@@ -95,7 +95,7 @@ class TideContent extends StatelessWidget {
   Widget buildActivitySection(BuildContext context, TideModel tidata) {
     final prods = tidata.commodityList!;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.px),
+      margin: EdgeInsets.symmetric(vertical: 8.px),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -173,22 +173,29 @@ class TideContent extends StatelessWidget {
 
   /// 构建 活动图片
   Widget buildActivityImg(TideModel tidata) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      physics: ScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: tidata.subComponents!.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10.px,
-        mainAxisExtent: 95.px,
+    return Container(
+      padding: EdgeInsets.all(8.px),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        // borderRadius: BorderRadius.circular(8.px)
       ),
-      itemBuilder: (ctx, index) {
-        return Image.network(
-          tidata.subComponents![index].backGroundUrl,
-          height: double.minPositive,
-        );
-      },
+      child: GridView.builder(
+        padding: EdgeInsets.zero,
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: tidata.subComponents!.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 2.px,
+          mainAxisExtent: 95.px,
+        ),
+        itemBuilder: (ctx, index) {
+          return Image.network(
+            tidata.subComponents![index].backGroundUrl,
+            height: double.minPositive,
+          );
+        },
+      ),
     );
   }
 
