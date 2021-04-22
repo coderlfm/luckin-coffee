@@ -241,7 +241,7 @@ class TideContent extends StatelessWidget {
   /// 构建限时秒杀商品列表
   Container buildFlashSaleList(FlashSaleComponentDetail flashSale, BuildContext context) {
     return Container(
-      height: 120.px,
+      height: 130.px,
       child: ListView.builder(
         padding: EdgeInsets.zero,
         physics: ScrollPhysics(),
