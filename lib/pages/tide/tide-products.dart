@@ -9,59 +9,13 @@ import 'package:luckincoffee/view-model/tide-view-model.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class TideProducts extends StatefulWidget {
+class TideProducts extends StatelessWidget {
   late final List<CommodityList> products;
 
   TideProducts(this.products);
 
   @override
-  _TideProductsState createState() => _TideProductsState();
-}
-
-class _TideProductsState extends State<TideProducts> {
-  // final ScrollController _scrollController = new ScrollController(initialScrollOffset: 0);
-
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
-
-  /// 下拉刷新
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-  }
-
-  /// loading
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    print('loading...');
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    // items.add((items.length+1).toString());
-    if (mounted)
-      // setState(() {
-
-      // });
-      _refreshController.loadComplete();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  /// 加载更多
-  void _onLoadMore() {
-    print("加载更多！");
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return buildProductList();
-  }
-
-  /// 构建商品列表
-  Widget buildProductList() {
     return Selector<TideViewModel, TideViewModel>(
       selector: (ctx, tiVM) => tiVM,
       shouldRebuild: (prev, next) {
@@ -70,35 +24,21 @@ class _TideProductsState extends State<TideProducts> {
       builder: (ctx, tiVM, child) {
         final tiProddata = tiVM.tideProductData;
 
-        final List<CommodityList> products = [...widget.products, ...tiProddata];
+        final List<CommodityList> prods = [...products, ...tiProddata];
 
         return StaggeredGridView.countBuilder(
           crossAxisCount: 4, //横轴单元格数量
-          itemCount: products.length, //元素数量
+          itemCount: prods.length, //元素数量
           physics: ScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(vertical: 8.px),
           mainAxisSpacing: 8.px,
           crossAxisSpacing: 8.px,
-          itemBuilder: (context, index) => buildProductItem(products[index], context),
+          itemBuilder: (context, index) => buildProductItem(prods[index], context),
           staggeredTileBuilder: (index) => StaggeredTile.fit(2),
         );
       },
     );
-
-    // return widget(
-    //   child: StaggeredGridView.countBuilder(
-    //     crossAxisCount: 4, //横轴单元格数量
-    //     itemCount: widget.products.length, //元素数量
-    //     physics: ScrollPhysics(),
-    //     shrinkWrap: true,
-    //     padding: EdgeInsets.symmetric(vertical: 8.px),
-    //     mainAxisSpacing: 8.px,
-    //     crossAxisSpacing: 8.px,
-    //     itemBuilder: (context, index) => buildProductItem(widget.products[index], context),
-    //     staggeredTileBuilder: (index) => StaggeredTile.fit(2),
-    //   ),
-    // );
   }
 
   /// 构建商品 item

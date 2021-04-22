@@ -51,17 +51,19 @@ class TideViewModel extends ChangeNotifier {
 
   /// 获取潮品数据
   Future getTideData() async {
+    final res;
+
     /// 获取潮品数据
     if (homePage == 1) {
-      final res = await TideRequest.getTideData(page: homePage);
+      res = await TideRequest.getTideData(page: homePage);
       print('潮品数据: $res');
       tideData = res;
     } else {
-      final res = await TideRequest.getTideProductData(page: homePage);
-      tideProductData = res;
+      res = await TideRequest.getTideProductData(page: homePage);
+      tideProductData = [...tideProductData, ...res];
     }
 
     homePage++;
-    return Future.value();
+    return Future.value(res.length);
   }
 }

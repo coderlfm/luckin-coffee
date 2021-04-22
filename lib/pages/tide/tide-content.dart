@@ -297,14 +297,21 @@ class TideContent extends StatelessWidget {
 
   /// 构建频道
   Widget buildChannel(TideModel tidata) {
-    return GridView.builder(
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        itemCount: tidata.subComponents!.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-        itemBuilder: (ctx, index) {
-          return Image.network(tidata.subComponents![index].backGroundUrl);
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.px),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.px)
+      ),
+      child: GridView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          itemCount: tidata.subComponents!.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+          itemBuilder: (ctx, index) {
+            return Image.network(tidata.subComponents![index].backGroundUrl);
+          }),
+    );
   }
 
   /// 构建 swiper

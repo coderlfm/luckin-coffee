@@ -12,7 +12,6 @@ class TidePage extends StatefulWidget {
 }
 
 class _TidePageState extends State<TidePage> {
-  List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
@@ -25,14 +24,11 @@ class _TidePageState extends State<TidePage> {
   void _onLoading(BuildContext context) async {
     TideViewModel tideVM = Provider.of<TideViewModel>(context, listen: false);
 
-    await tideVM.getTideData();
+    /// 上拉加载更多潮品数据
+    final res = await tideVM.getTideData();
+    print('res:${res}');
 
-    // monitor network fetch
-    // await Future.delayed(Duration(milliseconds: 1000));
-    print('刷新');
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    items.add((items.length + 1).toString());
-    if (mounted) setState(() {});
+    /// TODO: 此处需要设置成已加载完毕
     _refreshController.loadComplete();
   }
 
@@ -75,4 +71,3 @@ class _TidePageState extends State<TidePage> {
     );
   }
 }
-
