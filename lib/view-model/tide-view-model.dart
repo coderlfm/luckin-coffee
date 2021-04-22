@@ -39,14 +39,14 @@ class TideViewModel extends ChangeNotifier {
   }
 
   /// 初始化数据
-  void tideInitData() {
+  Future tideInitData() async {
     /// 获取轮播图数据
-    TideRequest.getTideBannerData().then((res) {
-      print('轮播图数据: $res');
-      tideBannerData = res;
-    });
+    final res = await TideRequest.getTideBannerData();
+    print('轮播图数据: $res');
+    tideBannerData = res;
 
-    getTideData();
+    await getTideData();
+    return Future.value();
   }
 
   /// 获取潮品数据

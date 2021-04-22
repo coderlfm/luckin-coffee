@@ -4,6 +4,7 @@ import 'package:luckincoffee/pages/tide/tide-content.dart';
 import 'package:luckincoffee/view-model/tide-view-model.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:luckincoffee/extensions/int-extensions.dart';
 
 class TidePage extends StatefulWidget {
   static String routerName = '/tide';
@@ -14,10 +15,9 @@ class TidePage extends StatefulWidget {
 class _TidePageState extends State<TidePage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
 
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
+  void _onRefresh(BuildContext context) async {
+    TideViewModel tideVM = Provider.of<TideViewModel>(context, listen: false);
+    await tideVM.tideInitData();
     _refreshController.refreshCompleted();
   }
 
@@ -27,7 +27,7 @@ class _TidePageState extends State<TidePage> {
     /// 上拉加载更多潮品数据
     final res = await tideVM.getTideData();
     print('res:${res}');
-
+  
     /// TODO: 此处需要设置成已加载完毕
     if (res > 0) {
       _refreshController.loadComplete();
@@ -55,7 +55,7 @@ class _TidePageState extends State<TidePage> {
             } else if (mode == LoadStatus.canLoading) {
               body = Text("松手,加载更多!");
             } else {
-              body = Text("没有更多数据了!");
+              body = Text("没有更多啦~");
             }
             return Container(
               height: 55.0,
@@ -64,12 +64,22 @@ class _TidePageState extends State<TidePage> {
           },
         ),
         controller: _refreshController,
-        onRefresh: _onRefresh,
+        onRefresh: () => _onRefresh(context),
         onLoading: () => _onLoading(context),
-        child: ListView(
-          physics: ScrollPhysics(),
-          shrinkWrap: true,
-          children: [TideContent()],
+        child: Stack(
+          children: [
+            ListView(
+              padding: EdgeInsets.zero,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              children: [TideContent()],
+            ),
+            Positioned(
+              right: 10.px,
+              bottom: 80.px,
+              child: Image.asset('lib/assets/images/tide/icon_arrow_back_to_top.png'))
+            
+          ],
         ),
       ),
     );
