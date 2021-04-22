@@ -29,9 +29,9 @@ class _TidePageState extends State<TidePage> {
     print('res:${res}');
 
     /// TODO: 此处需要设置成已加载完毕
-    if(res > 0){
+    if (res > 0) {
       _refreshController.loadComplete();
-    }else{
+    } else {
       _refreshController.loadNoData();
     }
   }
